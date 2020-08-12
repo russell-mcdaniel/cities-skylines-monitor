@@ -3,7 +3,7 @@ using ICities;
 
 namespace CitiesSkylinesInsights
 {
-    public class CitiesSkylinesInsightsMod : IUserMod
+    public class InsightsMod : IUserMod
     {
         public string Name => "Insights";
 
