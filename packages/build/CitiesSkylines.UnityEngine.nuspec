@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>CitiesSkylines.UnityEngine</id>
+        <version>1.13.1</version>
+        <description>Provides access to the UnityEngine assembly in Cities: Skylines.</description>
+        <authors>Cities: Skylines Insights</authors>
+        <dependencies>
+            <group targetFramework=".NETFramework3.5" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="C:\Program Files (x86)\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\UnityEngine.dll" target="lib\net35" />
+    </files>
+</package>
