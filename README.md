@@ -1,3 +1,3 @@
 # Cities: Skylines Insights
 
-Gain insights from game activity in Cities: Skylines.
+Gain insights from gameplay in Cities: Skylines.
