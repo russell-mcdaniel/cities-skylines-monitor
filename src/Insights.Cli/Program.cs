@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using Insights;
 
 namespace Insights.Cli
@@ -7,9 +9,13 @@ namespace Insights.Cli
     {
         static void Main(string[] args)
         {
-            var insights = new InsightsMod();
-            insights.OnEnabled();
-            insights.OnDisabled();
+            var assemblyPath = Assembly
+                .GetExecutingAssembly()
+                .Location;
+
+            var assemblyDirectory = Path.GetDirectoryName(assemblyPath);
+
+            Console.WriteLine(assemblyPath);
         }
     }
 }

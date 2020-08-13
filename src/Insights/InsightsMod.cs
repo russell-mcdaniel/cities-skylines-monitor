@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Reflection;
 using ICities;
+using UnityEngine;
+using Insights.Diagnostics;
 
 namespace Insights
 {
@@ -9,14 +12,20 @@ namespace Insights
 
         public string Description => "Gain insights from gameplay";
 
+        public InsightsMod()
+        {
+        }
+
         public void OnEnabled()
         {
-            Logger.Log("OnEnabled");
+            Tracer.Trace("OnEnabled");
+
+            Tracer.Trace($"Data Path: {Application.dataPath}");
         }
 
         public void OnDisabled()
         {
-            Logger.Log("OnDisabled");
+            Tracer.Trace("OnDisabled");
         }
     }
 }
