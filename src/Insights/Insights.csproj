@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Game\LoadingEvents.cs" />
     <Compile Include="Game\LoadingExtension.cs" />
+    <Compile Include="Game\PluginEvents.cs" />
     <Compile Include="InsightsMod.cs" />
     <Compile Include="Logging\InsightsLogger.cs" />
     <Compile Include="Logging\InsightsLoggerLogFileManager.cs" />

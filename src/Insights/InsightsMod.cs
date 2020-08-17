@@ -9,6 +9,7 @@ namespace Insights
         protected InsightsLogger<InsightsMod> InsightsLogger { get; } = new InsightsLogger<InsightsMod>();
 
         private LoadingEvents _loadingEvents;
+        private PluginEvents _pluginEvents;
 
         #region IUserMod
 
@@ -33,8 +34,7 @@ namespace Insights
         {
             InsightsLogger.Log("OnEnabled");
 
-            _loadingEvents = new LoadingEvents();
-            _loadingEvents.Subscribe();
+            Subscribe();
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Insights
         /// </remarks>
         public void OnDisabled()
         {
-            _loadingEvents.Unsubscribe();
+            Unsubscribe();
 
             InsightsLogger.Log("OnDisabled");
             InsightsLogger.Flush();
@@ -61,12 +61,19 @@ namespace Insights
         //    // https://skylines.paradoxwikis.com/Mod_Options_Panel
         //}
 
-        private void InitializeEventSubscriptions()
+        private void Subscribe()
         {
+            _loadingEvents = new LoadingEvents();
+            _loadingEvents.Subscribe();
+
+            _pluginEvents = new PluginEvents();
+            _pluginEvents.Unsubscribe();
         }
 
-        private void TerminateEventSubscriptions()
+        private void Unsubscribe()
         {
+            _pluginEvents.Unsubscribe();
+            _loadingEvents.Unsubscribe();
         }
     }
 }
