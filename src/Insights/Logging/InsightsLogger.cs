@@ -57,19 +57,19 @@ namespace Insights.Logging
             {
                 // Get the current time and create a new log file if the rollover interval is reached.
                 var timestamp = DateTime.UtcNow;
-                var timestampMinute = timestamp.Truncate(TimeSpan.TicksPerMinute);
+                var timestampInterval = timestamp.Truncate(TimeSpan.TicksPerDay);
 
                 // Use double-checked locking pattern. The safety of this approach for all situations
                 // is debated, but it seems better than doing nothing. Open to improvement here.
-                if (timestampMinute != LogFileManager.LogFileTime)
+                if (timestampInterval != LogFileManager.LogFileTime)
                 {
                     lock (LogFileManager.LogFileSyncRoot)
                     {
-                        if (timestampMinute != LogFileManager.LogFileTime)
+                        if (timestampInterval != LogFileManager.LogFileTime)
                         {
-                            LogFileManager.LogFileTime = timestampMinute;
+                            LogFileManager.LogFileTime = timestampInterval;
 
-                            LogFileManager.CreateLogFile(timestampMinute);
+                            LogFileManager.CreateLogFile(timestampInterval);
                         }
                     }
                 }

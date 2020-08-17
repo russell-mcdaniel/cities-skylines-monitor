@@ -21,12 +21,12 @@ namespace Insights.Logging
         /// <summary>
         /// Creates a log file based on the specified timestamp. If the log file already exists, it will be opened.
         /// </summary>
-        /// <param name="timestampMinute"></param>
+        /// <param name="timestamp">The timestamp truncated to the target log file interval.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The log writer lifecycle is managed at the class scope.")]
-        public static void CreateLogFile(DateTime timestampMinute)
+        public static void CreateLogFile(DateTime timestamp)
         {
             // Set the log file name.
-            var logFileName = $"CitiesSkylinesInsights-{timestampMinute:yyyyMMdd}-{timestampMinute:HHmm}.log";
+            var logFileName = $"CitiesSkylinesInsights-{timestamp:yyyyMMdd}-{timestamp:HHmm}.log";
 
             // Set the log file path.
             var logFilePath = Path.Combine(
