@@ -36,23 +36,23 @@ namespace Insights.Game
         {
             InsightsLogger.Log("PluginManagerPluginsChanged");
 
-            ListPlugins();
+            ListPlugins("PluginManagerPluginsChanged");
         }
 
         private void PluginManagerPluginsStateChanged()
         {
             InsightsLogger.Log("PluginManagerPluginsStateChanged");
 
-            ListPlugins();
+            ListPlugins("PluginManagerPluginsStateChanged");
         }
 
-        private void ListPlugins()
+        private void ListPlugins(string eventName)
         {
             var manager = PluginManager.instance;
 
             foreach (var info in manager.GetPluginsInfo())
             {
-                InsightsLogger.Log($"PluginManagerPluginsChanged Name: {info.name} | IsBuiltIn: {info.isBuiltin} | IsEnabled: {info.isEnabled}");
+                InsightsLogger.Log($"{eventName} ListPlugins Name: {info.name} | IsBuiltIn: {info.isBuiltin} | IsEnabled: {info.isEnabled}");
             }
         }
     }
