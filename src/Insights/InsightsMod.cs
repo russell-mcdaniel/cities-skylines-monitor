@@ -67,7 +67,7 @@ namespace Insights
             _loadingEvents.Subscribe();
 
             _pluginEvents = new PluginEvents();
-            _pluginEvents.Unsubscribe();
+            _pluginEvents.Subscribe();
         }
 
         private void Unsubscribe()
