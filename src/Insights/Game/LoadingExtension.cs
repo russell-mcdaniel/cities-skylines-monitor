@@ -19,28 +19,28 @@ namespace Insights.Game
         /// </remarks>
         public override void OnCreated(ILoading loading)
         {
-            InsightsLogger.Log($"Loading: OnCreated: CurrentMode: {loading.currentMode} | CurrentTheme: {loading.currentTheme} | LoadingComplete: {loading.loadingComplete}");
+            InsightsLogger.Log($"OnCreated: CurrentMode: {loading.currentMode} | CurrentTheme: {loading.currentTheme} | LoadingComplete: {loading.loadingComplete}");
 
             base.OnCreated(loading);
         }
 
         public override void OnLevelLoaded(LoadMode mode)
         {
-            InsightsLogger.Log($"Loading: OnLevelLoaded: LoadMode: {mode}");
+            InsightsLogger.Log($"OnLevelLoaded: LoadMode: {mode}");
 
             base.OnLevelLoaded(mode);
         }
 
         public override void OnLevelUnloading()
         {
-            InsightsLogger.Log($"Loading: OnLevelUnloading");
+            InsightsLogger.Log($"OnLevelUnloading");
 
             base.OnLevelUnloading();
         }
 
         public override void OnReleased()
         {
-            InsightsLogger.Log($"Loading: OnReleased");
+            InsightsLogger.Log($"OnReleased");
 
             base.OnReleased();
         }

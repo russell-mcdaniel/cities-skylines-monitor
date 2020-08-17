@@ -4,7 +4,7 @@ namespace Insights.Game
 {
     public class LoadingEvents
     {
-        protected InsightsLogger<LoadingExtension> InsightsLogger { get; } = new InsightsLogger<LoadingExtension>();
+        protected InsightsLogger<LoadingEvents> InsightsLogger { get; } = new InsightsLogger<LoadingEvents>();
 
         public void Subscribe()
         {
