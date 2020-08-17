@@ -1,6 +1,5 @@
 ﻿using System;
 using Insights.Utilities;
-using LogFileManager = Insights.Logging.InsightsLoggerLogFileManager;
 
 namespace Insights.Logging
 {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Insights.Logging
 {
-    internal static class InsightsLoggerLogFileManager
+    internal static class LogFileManager
     {
         public static object LogFileSyncRoot { get; } = new object();
 

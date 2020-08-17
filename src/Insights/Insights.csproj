@@ -41,7 +41,7 @@
     <Compile Include="Game\PluginEvents.cs" />
     <Compile Include="InsightsMod.cs" />
     <Compile Include="Logging\InsightsLogger.cs" />
-    <Compile Include="Logging\InsightsLoggerLogFileManager.cs" />
+    <Compile Include="Logging\LogFileManager.cs" />
     <Compile Include="Logging\InternalLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\DateTimeExtensions.cs" />
