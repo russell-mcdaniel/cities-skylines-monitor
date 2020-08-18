@@ -12,12 +12,12 @@ namespace Insights.Logging
     {
         public static void Log(string message)
         {
-            Debug.Log(message);
+            Debug.Log($"{DateTime.UtcNow:O} InsightsMod: {message}");
         }
 
         public static void Log(string message, Exception ex)
         {
-            Debug.Log(message);
+            Debug.Log($"{DateTime.UtcNow:O} InsightsMod: {message}");
             Debug.LogException(ex);
         }
 
