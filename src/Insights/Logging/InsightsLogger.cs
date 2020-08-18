@@ -19,6 +19,8 @@ namespace Insights.Logging
     /// </remarks>
     public class InsightsLogger<T>
     {
+        private const string LoggerErrorMessage = "The logger encountered an error.";
+
         private readonly string _loggerTypeName;
 
         public InsightsLogger()
@@ -37,12 +39,12 @@ namespace Insights.Logging
             {
                 lock (LogFileManager.LogFileSyncRoot)
                 {
-                    LogFileManager.LogFileWriter.Flush();
+                    LogFileManager.LogFileWriter?.Flush();
                 }
             }
             catch (Exception ex)
             {
-                InternalLogger.Log($"The logger encountered an error.", ex);
+                InternalLogger.Log(LoggerErrorMessage, ex);
             }
         }
 
@@ -86,7 +88,28 @@ namespace Insights.Logging
             }
             catch (Exception ex)
             {
-                InternalLogger.Log($"The logger encountered an error.", ex);
+                InternalLogger.Log(LoggerErrorMessage, ex);
+            }
+        }
+
+        /// <summary>
+        /// Reset the logger so that it can be reinitialized.
+        /// </summary>
+        /// <remarks>
+        /// This method is provided primarily to support hot reloads of mods.
+        /// 
+        /// See remarks on the LogFileManager.
+        /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "The logger should not throw in order to avoid disrupting the game.")]
+        public void Reset()
+        {
+            try
+            {
+                LogFileManager.Reset();
+            }
+            catch (Exception ex)
+            {
+                InternalLogger.Log(LoggerErrorMessage, ex);
             }
         }
 

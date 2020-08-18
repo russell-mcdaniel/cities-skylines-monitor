@@ -45,5 +45,26 @@ namespace Insights.Logging
             // if a session is restarted within the same rollover period.
             LogFileWriter = File.AppendText(logFilePath);
         }
+
+        /// <summary>
+        /// Reset the log file manager.
+        /// </summary>
+        /// <remarks>
+        /// This method is provided primarily to support hot reloads of mods. The game does
+        /// not release resources held by mods when they are unloaded and recreated, so it
+        /// is up to the mod to handle this.
+        /// 
+        /// In this case, the StreamWriter remains open, but when the game reloads the mod,
+        /// the log file is still open causing a IOException (sharing violation) when the
+        /// mod attempts to reopen the log file.
+        /// </remarks>
+        public static void Reset()
+        {
+            // Flush and release the log file.
+            LogFileWriter?.Dispose();
+
+            // Ensure that the next log call will initialize the writer.
+            LogFileTime = DateTime.MinValue;
+        }
     }
 }
