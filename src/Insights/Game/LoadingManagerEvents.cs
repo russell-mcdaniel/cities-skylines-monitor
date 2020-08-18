@@ -2,9 +2,9 @@
 
 namespace Insights.Game
 {
-    public class LoadingEvents
+    public class LoadingManagerEvents
     {
-        protected InsightsLogger<LoadingEvents> InsightsLogger { get; } = new InsightsLogger<LoadingEvents>();
+        protected InsightsLogger<LoadingManagerEvents> InsightsLogger { get; } = new InsightsLogger<LoadingManagerEvents>();
 
         public void Subscribe()
         {
@@ -60,6 +60,10 @@ namespace Insights.Game
         private void LoadingManagerMetaDataReady()
         {
             InsightsLogger.Log("LoadingManagerMetaDataReady");
+
+            var manager = SimulationManager.instance;
+
+            InsightsLogger.Log($"LoadingManagerMetaDataReady InstanceId: {manager?.m_metaData?.m_gameInstanceIdentifier} | CityName: {manager?.m_metaData?.m_CityName}");
         }
 
         private void LoadingManagerSimulationDataReady()

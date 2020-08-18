@@ -3,9 +3,9 @@ using Insights.Logging;
 
 namespace Insights.Game
 {
-    public class PluginEvents
+    public class PluginManagerEvents
     {
-        protected InsightsLogger<PluginEvents> InsightsLogger { get; } = new InsightsLogger<PluginEvents>();
+        protected InsightsLogger<PluginManagerEvents> InsightsLogger { get; } = new InsightsLogger<PluginManagerEvents>();
 
         public void Subscribe()
         {
@@ -52,7 +52,7 @@ namespace Insights.Game
 
             foreach (var info in manager.GetPluginsInfo())
             {
-                InsightsLogger.Log($"{eventName} ListPlugins Name: {info.name} | IsBuiltIn: {info.isBuiltin} | IsEnabled: {info.isEnabled}");
+                InsightsLogger.Log($"{eventName} ListPlugins Name: {info.name} | IsBuiltIn: {info.isBuiltin} | IsEnabled: {info.isEnabled} | Assemblies ({info.assemblyCount}): {info.assembliesString}");
             }
         }
     }
