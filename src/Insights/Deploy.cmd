@@ -3,7 +3,7 @@
 ECHO.
 ECHO Creating the mod path...
 
-SET MODPATH=%LOCALAPPDATA%\Colossal Order\Cities_Skylines\Addons\Mods\CitiesSkylinesInsights
+SET MODPATH=%LOCALAPPDATA%\Colossal Order\Cities_Skylines\Addons\Mods\Insights
 
 IF NOT EXIST "%MODPATH%" (
     MKDIR "%MODPATH%"
@@ -20,7 +20,7 @@ DEL /F /S /Q "%MODPATH%\*.*"
 ECHO.
 ECHO Copying files...
 
-XCOPY /E "bin\Debug\CitiesSkylinesInsights.*" "%MODPATH%"
+XCOPY /E "bin\Debug\Insights.*" "%MODPATH%"
 
 ECHO.
 ECHO Deployment complete.

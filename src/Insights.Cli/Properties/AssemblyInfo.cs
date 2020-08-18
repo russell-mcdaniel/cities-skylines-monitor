@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Cities: Skylines Insights")]
-[assembly: AssemblyDescription("Gain insights from game activity")]
+[assembly: AssemblyTitle("CitiesSkylinesInsights.Cli")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Cities: Skylines Insights")]
-[assembly: AssemblyProduct("Cities: Skylines Insights")]
-[assembly: AssemblyCopyright("© Cities: Skylines Insights. All rights reserved.")]
+[assembly: AssemblyCompany("Siliconesis")]
+[assembly: AssemblyProduct("CitiesSkylinesInsights.Cli")]
+[assembly: AssemblyCopyright("Copyright © Siliconesis 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6ee38270-c3e6-4c5a-829a-444c7e74c3d8")]
+[assembly: Guid("624f2e37-98c0-4853-8a0a-8f122315ad99")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,6 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.*")]        // Use for development.
-//[assembly: AssemblyVersion("0.1.0.0")]    // Use for release.
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
