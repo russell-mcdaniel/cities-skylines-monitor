@@ -8,8 +8,8 @@ namespace Insights
     {
         protected InsightsLogger<InsightsMod> InsightsLogger { get; } = new InsightsLogger<InsightsMod>();
 
-        private LoadingEvents _loadingEvents;
-        private PluginEvents _pluginEvents;
+        private LoadingManagerEvents _loadingManagerEvents;
+        private PluginManagerEvents _pluginManagerEvents;
 
         #region IUserMod
 
@@ -48,7 +48,7 @@ namespace Insights
             Unsubscribe();
 
             InsightsLogger.Log("OnDisabled");
-            InsightsLogger.Flush();
+            InsightsLogger.Reset();
         }
 
         /// <summary>
@@ -63,17 +63,17 @@ namespace Insights
 
         private void Subscribe()
         {
-            _loadingEvents = new LoadingEvents();
-            _loadingEvents.Subscribe();
+            _loadingManagerEvents = new LoadingManagerEvents();
+            _loadingManagerEvents.Subscribe();
 
-            _pluginEvents = new PluginEvents();
-            _pluginEvents.Subscribe();
+            _pluginManagerEvents = new PluginManagerEvents();
+            _pluginManagerEvents.Subscribe();
         }
 
         private void Unsubscribe()
         {
-            _pluginEvents.Unsubscribe();
-            _loadingEvents.Unsubscribe();
+            _pluginManagerEvents.Unsubscribe();
+            _loadingManagerEvents.Unsubscribe();
         }
     }
 }
