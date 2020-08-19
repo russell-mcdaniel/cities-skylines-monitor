@@ -19,14 +19,14 @@ namespace Insights.Game
         /// </remarks>
         public override void OnCreated(ILoading loading)
         {
-            InsightsLogger.Log($"OnCreated: CurrentMode: {loading.currentMode} | CurrentTheme: {loading.currentTheme} | LoadingComplete: {loading.loadingComplete}");
+            InsightsLogger.Log($"OnCreated > CurrentMode: {loading.currentMode} | CurrentTheme: {loading.currentTheme} | LoadingComplete: {loading.loadingComplete}");
 
             base.OnCreated(loading);
         }
 
         public override void OnLevelLoaded(LoadMode mode)
         {
-            InsightsLogger.Log($"OnLevelLoaded: LoadMode: {mode}");
+            InsightsLogger.Log($"OnLevelLoaded > LoadMode: {mode}");
 
             base.OnLevelLoaded(mode);
         }

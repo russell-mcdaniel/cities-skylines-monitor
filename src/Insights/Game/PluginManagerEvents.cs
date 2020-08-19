@@ -29,7 +29,7 @@ namespace Insights.Game
 
         private void EventLogMessage(PluginManager.MessageType type, string message)
         {
-            InsightsLogger.Log($"EventLogMessage MessageType: {type} | Message: {message}");
+            InsightsLogger.Log($"EventLogMessage > MessageType: {type} | Message: {message}");
         }
 
         private void PluginsChanged()
@@ -52,7 +52,7 @@ namespace Insights.Game
 
             foreach (var info in manager.GetPluginsInfo())
             {
-                InsightsLogger.Log($"{eventName} ListPlugins Name: {info.name} | IsBuiltIn: {info.isBuiltin} | IsEnabled: {info.isEnabled} | Assemblies ({info.assemblyCount}): {info.assembliesString}");
+                InsightsLogger.Log($"{eventName} ListPlugins > Name: {info.name} | IsBuiltIn: {info.isBuiltin} | IsEnabled: {info.isEnabled} | Assemblies ({info.assemblyCount}): {info.assembliesString}");
             }
         }
     }
