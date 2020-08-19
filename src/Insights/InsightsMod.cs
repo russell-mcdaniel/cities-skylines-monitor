@@ -8,12 +8,14 @@ namespace Insights
     {
         protected InsightsLogger<InsightsMod> InsightsLogger { get; } = new InsightsLogger<InsightsMod>();
 
+        private readonly string _version = typeof(InsightsMod).Assembly.GetName().Version.ToString();
+
         private LoadingManagerEvents _loadingManagerEvents;
         private PluginManagerEvents _pluginManagerEvents;
 
         #region IUserMod
 
-        public string Name => "Insights";
+        public string Name => $"Insights {_version}";
 
         public string Description => "Gain insights from gameplay";
 
