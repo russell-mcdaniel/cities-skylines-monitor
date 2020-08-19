@@ -11,39 +11,39 @@ namespace Insights.Game
         {
             var manager = PluginManager.instance;
 
-            manager.eventPluginsChanged += PluginManagerPluginsChanged;
-            manager.eventPluginsStateChanged += PluginManagerPluginsStateChanged;
+            manager.eventPluginsChanged += PluginsChanged;
+            manager.eventPluginsStateChanged += PluginsStateChanged;
 
-            PluginManager.eventLogMessage += PluginManagerEventLogMessage;
+            PluginManager.eventLogMessage += EventLogMessage;
         }
 
         public void Unsubscribe()
         {
             var manager = PluginManager.instance;
 
-            manager.eventPluginsChanged -= PluginManagerPluginsChanged;
-            manager.eventPluginsStateChanged -= PluginManagerPluginsStateChanged;
+            manager.eventPluginsChanged -= PluginsChanged;
+            manager.eventPluginsStateChanged -= PluginsStateChanged;
 
-            PluginManager.eventLogMessage -= PluginManagerEventLogMessage;
+            PluginManager.eventLogMessage -= EventLogMessage;
         }
 
-        private void PluginManagerEventLogMessage(PluginManager.MessageType type, string message)
+        private void EventLogMessage(PluginManager.MessageType type, string message)
         {
-            InsightsLogger.Log($"PluginManagerEventLogMessage MessageType: {type} | Message: {message}");
+            InsightsLogger.Log($"EventLogMessage MessageType: {type} | Message: {message}");
         }
 
-        private void PluginManagerPluginsChanged()
+        private void PluginsChanged()
         {
-            InsightsLogger.Log("PluginManagerPluginsChanged");
+            InsightsLogger.Log("PluginsChanged");
 
-            ListPlugins("PluginManagerPluginsChanged");
+            ListPlugins("PluginsChanged");
         }
 
-        private void PluginManagerPluginsStateChanged()
+        private void PluginsStateChanged()
         {
-            InsightsLogger.Log("PluginManagerPluginsStateChanged");
+            InsightsLogger.Log("PluginsStateChanged");
 
-            ListPlugins("PluginManagerPluginsStateChanged");
+            ListPlugins("PluginsStateChanged");
         }
 
         private void ListPlugins(string eventName)

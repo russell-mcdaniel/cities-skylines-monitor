@@ -10,65 +10,65 @@ namespace Insights.Game
         {
             var manager = LoadingManager.instance;
 
-            manager.m_introLoaded += LoadingManagerIntroLoaded;
-            manager.m_levelLoaded += LoadingManagerLevelLoaded;
-            manager.m_levelPreLoaded += LoadingManagerLevelPreLoaded;
-            manager.m_levelPreUnloaded += LoadingManagerLevelPreUnloaded;
-            manager.m_levelUnloaded += LoadingManagerLevelUnloaded;
-            manager.m_metaDataReady += LoadingManagerMetaDataReady;
-            manager.m_simulationDataReady += LoadingManagerSimulationDataReady;
+            manager.m_introLoaded += IntroLoaded;
+            manager.m_levelLoaded += LevelLoaded;
+            manager.m_levelPreLoaded += LevelPreLoaded;
+            manager.m_levelPreUnloaded += LevelPreUnloaded;
+            manager.m_levelUnloaded += LevelUnloaded;
+            manager.m_metaDataReady += MetaDataReady;
+            manager.m_simulationDataReady += SimulationDataReady;
         }
 
         public void Unsubscribe()
         {
             var manager = LoadingManager.instance;
 
-            manager.m_introLoaded -= LoadingManagerIntroLoaded;
-            manager.m_levelLoaded -= LoadingManagerLevelLoaded;
-            manager.m_levelPreLoaded -= LoadingManagerLevelPreLoaded;
-            manager.m_levelPreUnloaded -= LoadingManagerLevelPreUnloaded;
-            manager.m_levelUnloaded -= LoadingManagerLevelUnloaded;
-            manager.m_metaDataReady -= LoadingManagerMetaDataReady;
-            manager.m_simulationDataReady -= LoadingManagerSimulationDataReady;
+            manager.m_introLoaded -= IntroLoaded;
+            manager.m_levelLoaded -= LevelLoaded;
+            manager.m_levelPreLoaded -= LevelPreLoaded;
+            manager.m_levelPreUnloaded -= LevelPreUnloaded;
+            manager.m_levelUnloaded -= LevelUnloaded;
+            manager.m_metaDataReady -= MetaDataReady;
+            manager.m_simulationDataReady -= SimulationDataReady;
         }
 
-        private void LoadingManagerIntroLoaded()
+        private void IntroLoaded()
         {
-            InsightsLogger.Log("LoadingManagerIntroLoaded");
+            InsightsLogger.Log("IntroLoaded");
         }
 
-        private void LoadingManagerLevelLoaded(SimulationManager.UpdateMode updateMode)
+        private void LevelLoaded(SimulationManager.UpdateMode updateMode)
         {
-            InsightsLogger.Log($"LoadingManagerLevelLoaded UpdateMode: {updateMode}");
+            InsightsLogger.Log($"LevelLoaded > UpdateMode: {updateMode}");
         }
 
-        private void LoadingManagerLevelPreLoaded()
+        private void LevelPreLoaded()
         {
-            InsightsLogger.Log("LoadingManagerLevelPreLoaded");
+            InsightsLogger.Log("LevelPreLoaded");
         }
 
-        private void LoadingManagerLevelPreUnloaded()
+        private void LevelPreUnloaded()
         {
-            InsightsLogger.Log("LoadingManagerLevelPreUnloaded");
+            InsightsLogger.Log("LevelPreUnloaded");
         }
 
-        private void LoadingManagerLevelUnloaded()
+        private void LevelUnloaded()
         {
-            InsightsLogger.Log("LoadingManagerLevelUnloaded");
+            InsightsLogger.Log("LevelUnloaded");
         }
 
-        private void LoadingManagerMetaDataReady()
+        private void MetaDataReady()
         {
-            InsightsLogger.Log("LoadingManagerMetaDataReady");
+            InsightsLogger.Log("MetaDataReady");
 
             var manager = SimulationManager.instance;
 
-            InsightsLogger.Log($"LoadingManagerMetaDataReady InstanceId: {manager?.m_metaData?.m_gameInstanceIdentifier} | CityName: {manager?.m_metaData?.m_CityName}");
+            InsightsLogger.Log($"MetaDataReady > SimulationManager > InstanceId: {manager?.m_metaData?.m_gameInstanceIdentifier} | CityName: {manager?.m_metaData?.m_CityName}");
         }
 
-        private void LoadingManagerSimulationDataReady()
+        private void SimulationDataReady()
         {
-            InsightsLogger.Log("LoadingManagerSimulationDataReady");
+            InsightsLogger.Log("SimulationDataReady");
         }
     }
 }
