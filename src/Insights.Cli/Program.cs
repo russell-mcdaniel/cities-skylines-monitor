@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using Insights;
 
 namespace Insights.Cli
 {
@@ -9,13 +8,11 @@ namespace Insights.Cli
     {
         static void Main(string[] args)
         {
-            var assemblyPath = Assembly
+            var assemblyName = Assembly
                 .GetExecutingAssembly()
-                .Location;
+                .GetName();
 
-            var assemblyDirectory = Path.GetDirectoryName(assemblyPath);
-
-            Console.WriteLine(assemblyPath);
+            Console.WriteLine(assemblyName.Version);
         }
     }
 }
