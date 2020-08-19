@@ -6,6 +6,18 @@ namespace Insights.Logging
 {
     internal static class LogFileManager
     {
+        /// <summary>
+        /// Gets a value indicating whether the writer flushes its buffer after every write.
+        /// </summary>
+        /// <remarks>
+        /// This lowers the performance of the logger. Use only for development and debugging.
+        /// </remarks>
+#if DEBUG
+        private const bool LogFileAutoFlush = true;
+#else
+        private const bool LogFileAutoFlush = false;
+#endif
+
         public static object LogFileSyncRoot { get; } = new object();
 
         /// <summary>
@@ -44,6 +56,7 @@ namespace Insights.Logging
             // Create a new writer. Use append to ensure a log file is not overwritten
             // if a session is restarted within the same rollover period.
             LogFileWriter = File.AppendText(logFilePath);
+            LogFileWriter.AutoFlush = LogFileAutoFlush;
         }
 
         /// <summary>
