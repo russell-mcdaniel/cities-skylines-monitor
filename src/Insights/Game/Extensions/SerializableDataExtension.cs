@@ -1,7 +1,7 @@
 ﻿using ICities;
 using Insights.Logging;
 
-namespace Insights.Game
+namespace Insights.Game.Extensions
 {
     public class SerializableDataExtension : SerializableDataExtensionBase
     {

@@ -1,11 +1,11 @@
 ﻿using ColossalFramework.Plugins;
 using Insights.Logging;
 
-namespace Insights.Game
+namespace Insights.Game.Extensions
 {
-    public class PluginManagerEvents
+    public class PluginManagerHandler
     {
-        protected InsightsLogger<PluginManagerEvents> InsightsLogger { get; } = new InsightsLogger<PluginManagerEvents>();
+        protected InsightsLogger<PluginManagerHandler> InsightsLogger { get; } = new InsightsLogger<PluginManagerHandler>();
 
         public void Subscribe()
         {

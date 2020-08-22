@@ -1,5 +1,5 @@
 ﻿using ICities;
-using Insights.Game;
+using Insights.Game.Extensions;
 using Insights.Logging;
 
 namespace Insights
@@ -10,8 +10,8 @@ namespace Insights
 
         private readonly string _version = typeof(InsightsMod).Assembly.GetName().Version.ToString();
 
-        private LoadingManagerEvents _loadingManagerEvents;
-        private PluginManagerEvents _pluginManagerEvents;
+        private LoadingManagerHandler _loadingManagerHandler;
+        private PluginManagerHandler _pluginManagerHandler;
 
         #region IUserMod
 
@@ -65,17 +65,17 @@ namespace Insights
 
         private void Subscribe()
         {
-            _loadingManagerEvents = new LoadingManagerEvents();
-            _loadingManagerEvents.Subscribe();
+            _loadingManagerHandler = new LoadingManagerHandler();
+            _loadingManagerHandler.Subscribe();
 
-            _pluginManagerEvents = new PluginManagerEvents();
-            _pluginManagerEvents.Subscribe();
+            _pluginManagerHandler = new PluginManagerHandler();
+            _pluginManagerHandler.Subscribe();
         }
 
         private void Unsubscribe()
         {
-            _pluginManagerEvents.Unsubscribe();
-            _loadingManagerEvents.Unsubscribe();
+            _pluginManagerHandler.Unsubscribe();
+            _loadingManagerHandler.Unsubscribe();
         }
     }
 }

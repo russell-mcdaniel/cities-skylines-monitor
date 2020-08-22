@@ -1,10 +1,10 @@
 ﻿using Insights.Logging;
 
-namespace Insights.Game
+namespace Insights.Game.Extensions
 {
-    public class LoadingManagerEvents
+    public class LoadingManagerHandler
     {
-        protected InsightsLogger<LoadingManagerEvents> InsightsLogger { get; } = new InsightsLogger<LoadingManagerEvents>();
+        protected InsightsLogger<LoadingManagerHandler> InsightsLogger { get; } = new InsightsLogger<LoadingManagerHandler>();
 
         public void Subscribe()
         {
