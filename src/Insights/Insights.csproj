@@ -36,10 +36,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\LoadingManagerEvents.cs" />
-    <Compile Include="Game\LoadingExtension.cs" />
-    <Compile Include="Game\PluginManagerEvents.cs" />
-    <Compile Include="Game\SerializableDataExtension.cs" />
+    <Compile Include="Game\Events\BeginSessionEvent.cs" />
+    <Compile Include="Game\Events\CoreEvent.cs" />
+    <Compile Include="Game\Events\EventType.cs" />
+    <Compile Include="Game\Extensions\LoadingManagerHandler.cs" />
+    <Compile Include="Game\Extensions\LoadingExtension.cs" />
+    <Compile Include="Game\Extensions\PluginManagerHandler.cs" />
+    <Compile Include="Game\Extensions\SerializableDataExtension.cs" />
+    <Compile Include="Game\SessionContext.cs" />
     <Compile Include="InsightsMod.cs" />
     <Compile Include="Logging\InsightsLogger.cs" />
     <Compile Include="Logging\LogFileManager.cs" />
