@@ -5,35 +5,35 @@ namespace Insights.Game.Extensions
 {
     public class SerializableDataExtension : SerializableDataExtensionBase
     {
-        protected InsightsLogger<SerializableDataExtension> InsightsLogger { get; } = new InsightsLogger<SerializableDataExtension>();
+        protected InsightsLogger<SerializableDataExtension> Logger { get; } = new InsightsLogger<SerializableDataExtension>();
 
         public override void OnCreated(ISerializableData serializableData)
         {
-            InsightsLogger.Log($"OnCreated");
+            Logger.Log($"OnCreated");
 
             base.OnCreated(serializableData);
         }
 
         public override void OnLoadData()
         {
-            InsightsLogger.Log($"OnLoadData");
+            Logger.Log($"OnLoadData");
 
             base.OnLoadData();
         }
 
         public override void OnReleased()
         {
-            InsightsLogger.Log($"OnReleased");
+            Logger.Log($"OnReleased");
 
             // Flush data at the end of a game session.
-            InsightsLogger.Flush();
+            Logger.Flush();
 
             base.OnReleased();
         }
 
         public override void OnSaveData()
         {
-            InsightsLogger.Log($"OnSaveData");
+            Logger.Log($"OnSaveData");
 
             base.OnSaveData();
         }

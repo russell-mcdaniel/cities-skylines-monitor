@@ -5,7 +5,7 @@ namespace Insights.Game.Extensions
 {
     public class LoadingExtension : LoadingExtensionBase
     {
-        protected InsightsLogger<LoadingExtension> InsightsLogger { get; } = new InsightsLogger<LoadingExtension>();
+        protected InsightsLogger<LoadingExtension> Logger { get; } = new InsightsLogger<LoadingExtension>();
 
         /// <summary>
         /// Occurs when one of the main game modes is entered.
@@ -19,28 +19,28 @@ namespace Insights.Game.Extensions
         /// </remarks>
         public override void OnCreated(ILoading loading)
         {
-            InsightsLogger.Log($"OnCreated > CurrentMode: {loading.currentMode} | CurrentTheme: {loading.currentTheme} | LoadingComplete: {loading.loadingComplete}");
+            Logger.Log($"OnCreated > CurrentMode: {loading.currentMode} | CurrentTheme: {loading.currentTheme} | LoadingComplete: {loading.loadingComplete}");
 
             base.OnCreated(loading);
         }
 
         public override void OnLevelLoaded(LoadMode mode)
         {
-            InsightsLogger.Log($"OnLevelLoaded > LoadMode: {mode}");
+            Logger.Log($"OnLevelLoaded > LoadMode: {mode}");
 
             base.OnLevelLoaded(mode);
         }
 
         public override void OnLevelUnloading()
         {
-            InsightsLogger.Log($"OnLevelUnloading");
+            Logger.Log($"OnLevelUnloading");
 
             base.OnLevelUnloading();
         }
 
         public override void OnReleased()
         {
-            InsightsLogger.Log($"OnReleased");
+            Logger.Log($"OnReleased");
 
             base.OnReleased();
         }

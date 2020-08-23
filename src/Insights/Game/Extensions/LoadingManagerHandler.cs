@@ -4,7 +4,7 @@ namespace Insights.Game.Extensions
 {
     public class LoadingManagerHandler
     {
-        protected InsightsLogger<LoadingManagerHandler> InsightsLogger { get; } = new InsightsLogger<LoadingManagerHandler>();
+        protected InsightsLogger<LoadingManagerHandler> Logger { get; } = new InsightsLogger<LoadingManagerHandler>();
 
         public void Subscribe()
         {
@@ -34,41 +34,41 @@ namespace Insights.Game.Extensions
 
         private void IntroLoaded()
         {
-            InsightsLogger.Log("IntroLoaded");
+            Logger.Log("IntroLoaded");
         }
 
         private void LevelLoaded(SimulationManager.UpdateMode updateMode)
         {
-            InsightsLogger.Log($"LevelLoaded > UpdateMode: {updateMode}");
+            Logger.Log($"LevelLoaded > UpdateMode: {updateMode}");
         }
 
         private void LevelPreLoaded()
         {
-            InsightsLogger.Log("LevelPreLoaded");
+            Logger.Log("LevelPreLoaded");
         }
 
         private void LevelPreUnloaded()
         {
-            InsightsLogger.Log("LevelPreUnloaded");
+            Logger.Log("LevelPreUnloaded");
         }
 
         private void LevelUnloaded()
         {
-            InsightsLogger.Log("LevelUnloaded");
+            Logger.Log("LevelUnloaded");
         }
 
         private void MetaDataReady()
         {
-            InsightsLogger.Log("MetaDataReady");
+            Logger.Log("MetaDataReady");
 
             var manager = SimulationManager.instance;
 
-            InsightsLogger.Log($"MetaDataReady > SimulationManager > InstanceId: {manager?.m_metaData?.m_gameInstanceIdentifier} | CityName: {manager?.m_metaData?.m_CityName}");
+            Logger.Log($"MetaDataReady > SimulationManager > InstanceId: {manager?.m_metaData?.m_gameInstanceIdentifier} | CityName: {manager?.m_metaData?.m_CityName}");
         }
 
         private void SimulationDataReady()
         {
-            InsightsLogger.Log("SimulationDataReady");
+            Logger.Log("SimulationDataReady");
         }
     }
 }
