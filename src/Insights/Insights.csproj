@@ -43,6 +43,7 @@
     <Compile Include="Game\Extensions\LoadingExtension.cs" />
     <Compile Include="Game\Extensions\PluginManagerHandler.cs" />
     <Compile Include="Game\Extensions\SerializableDataExtension.cs" />
+    <Compile Include="Game\Extensions\ThreadingExtension.cs" />
     <Compile Include="Game\SessionContext.cs" />
     <Compile Include="InsightsMod.cs" />
     <Compile Include="Logging\InsightsLogger.cs" />
