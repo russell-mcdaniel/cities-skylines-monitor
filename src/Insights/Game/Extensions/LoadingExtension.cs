@@ -33,14 +33,14 @@ namespace Insights.Game.Extensions
 
         public override void OnLevelUnloading()
         {
-            Logger.LogDebug($"OnLevelUnloading");
+            Logger.LogDebug("OnLevelUnloading");
 
             base.OnLevelUnloading();
         }
 
         public override void OnReleased()
         {
-            Logger.LogDebug($"OnReleased");
+            Logger.LogDebug("OnReleased");
 
             base.OnReleased();
         }
