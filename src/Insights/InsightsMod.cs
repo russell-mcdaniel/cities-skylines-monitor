@@ -11,6 +11,7 @@ namespace Insights
         private readonly string _version = typeof(InsightsMod).Assembly.GetName().Version.ToString();
 
         private LoadingManagerHandler _loadingManagerHandler;
+        private LocaleManagerHandler _localeManagerHandler;
         private PluginManagerHandler _pluginManagerHandler;
         private SceneManagerHandler _sceneManagerHandler;
 
@@ -69,6 +70,9 @@ namespace Insights
             _loadingManagerHandler = new LoadingManagerHandler();
             _loadingManagerHandler.Subscribe();
 
+            _localeManagerHandler = new LocaleManagerHandler();
+            _localeManagerHandler.Subscribe();
+
             _pluginManagerHandler = new PluginManagerHandler();
             _pluginManagerHandler.Subscribe();
 
@@ -78,8 +82,9 @@ namespace Insights
 
         private void Unsubscribe()
         {
-            _pluginManagerHandler.Unsubscribe();
             _loadingManagerHandler.Unsubscribe();
+            _localeManagerHandler.Subscribe();
+            _pluginManagerHandler.Unsubscribe();
             _sceneManagerHandler.Unsubscribe();
         }
     }

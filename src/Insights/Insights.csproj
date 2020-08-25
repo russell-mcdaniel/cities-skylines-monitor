@@ -41,6 +41,7 @@
     <Compile Include="Game\Events\EventType.cs" />
     <Compile Include="Game\Extensions\LoadingManagerHandler.cs" />
     <Compile Include="Game\Extensions\LoadingExtension.cs" />
+    <Compile Include="Game\Extensions\LocaleManagerHandler.cs" />
     <Compile Include="Game\Extensions\PluginManagerHandler.cs" />
     <Compile Include="Game\Extensions\SceneManagerHandler.cs" />
     <Compile Include="Game\Extensions\SerializableDataExtension.cs" />
