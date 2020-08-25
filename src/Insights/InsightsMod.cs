@@ -6,7 +6,7 @@ namespace Insights
 {
     public class InsightsMod : IUserMod
     {
-        protected InsightsLogger<InsightsMod> Logger { get; } = new InsightsLogger<InsightsMod>();
+        protected InsightsLogger Logger { get; } = new InsightsLogger(typeof(InsightsMod));
 
         private readonly string _version = typeof(InsightsMod).Assembly.GetName().Version.ToString();
 
@@ -23,7 +23,7 @@ namespace Insights
 
         public InsightsMod()
         {
-            Logger.Log("Instantiated");
+            Logger.LogDebug("Instantiated");
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Insights
         /// </remarks>
         public void OnEnabled()
         {
-            Logger.Log("OnEnabled");
+            Logger.LogDebug("OnEnabled");
 
             Subscribe();
         }
@@ -49,7 +49,7 @@ namespace Insights
         {
             Unsubscribe();
 
-            Logger.Log("OnDisabled");
+            Logger.LogDebug("OnDisabled");
             Logger.Reset();
         }
 

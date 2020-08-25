@@ -4,7 +4,7 @@ namespace Insights.Game.Extensions
 {
     public class LoadingManagerHandler
     {
-        protected InsightsLogger<LoadingManagerHandler> Logger { get; } = new InsightsLogger<LoadingManagerHandler>();
+        protected InsightsLogger Logger { get; } = new InsightsLogger(typeof(LoadingManagerHandler));
 
         public void Subscribe()
         {
@@ -34,41 +34,41 @@ namespace Insights.Game.Extensions
 
         private void IntroLoaded()
         {
-            Logger.Log("IntroLoaded");
+            Logger.LogDebug("IntroLoaded");
         }
 
         private void LevelLoaded(SimulationManager.UpdateMode updateMode)
         {
-            Logger.Log($"LevelLoaded > UpdateMode: {updateMode}");
+            Logger.LogDebug($"LevelLoaded > UpdateMode: {updateMode}");
         }
 
         private void LevelPreLoaded()
         {
-            Logger.Log("LevelPreLoaded");
+            Logger.LogDebug("LevelPreLoaded");
         }
 
         private void LevelPreUnloaded()
         {
-            Logger.Log("LevelPreUnloaded");
+            Logger.LogDebug("LevelPreUnloaded");
         }
 
         private void LevelUnloaded()
         {
-            Logger.Log("LevelUnloaded");
+            Logger.LogDebug("LevelUnloaded");
         }
 
         private void MetaDataReady()
         {
-            Logger.Log("MetaDataReady");
+            Logger.LogDebug("MetaDataReady");
 
             var manager = SimulationManager.instance;
 
-            Logger.Log($"MetaDataReady > SimulationManager > InstanceId: {manager?.m_metaData?.m_gameInstanceIdentifier} | CityName: {manager?.m_metaData?.m_CityName}");
+            Logger.LogDebug($"MetaDataReady > SimulationManager > InstanceId: {manager?.m_metaData?.m_gameInstanceIdentifier} | CityName: {manager?.m_metaData?.m_CityName}");
         }
 
         private void SimulationDataReady()
         {
-            Logger.Log("SimulationDataReady");
+            Logger.LogDebug("SimulationDataReady");
         }
     }
 }

@@ -1,46 +1,74 @@
 ﻿using System;
-using Insights.Utilities;
 
 namespace Insights.Logging
 {
     /// <summary>
-    /// Provides logging services for in-game events and telemetry.
+    /// Provides logging services.
     /// </summary>
-    /// <typeparam name="T">Specifies the containing type of the logger instance.</typeparam>
-    /// <remarks>
-    /// This logger is used exclusively for logging in-game events and telemetry. Logging for
-    /// technical concerns of the mod itself should be performed using InternalLogger.
-    /// 
-    /// Performance relies on the built-in buffering of the StreamWriter.
-    /// 
-    /// Thready safety is achieved through explicit locking code. The initial implementation
-    /// used TextWriter.Synchronized() to create a thread-safe version of the StreamWriter,
-    /// but the remaining buffer contents were never flushed on Dispose().
-    /// </remarks>
-    public class InsightsLogger<T>
+    public sealed class InsightsLogger
     {
         private const string LoggerErrorMessage = "The logger encountered an error.";
 
+#if DEBUG
+        private static LogFileManager _gameLog = new LogFileManager("Game", RolloverInterval.Day);
+#else
+        private static LogFileManager _gameLog = new LogFileManager("InsightsGame", RolloverInterval.Minute);
+#endif
+
+        private static LogFileManager _modLog = new LogFileManager("Mod", RolloverInterval.Day);
+
         private readonly string _loggerTypeName;
 
-        public InsightsLogger()
+        public InsightsLogger(Type callerType)
         {
+            if (callerType == null)
+                throw new ArgumentNullException(nameof(callerType));
+
             // Configure the logging context.
-            _loggerTypeName = GetLoggerTypeName();
+            _loggerTypeName = callerType.Name;
+        }
+
+        public void LogDebug(string message)
+        {
+            LogToModLog(message, LogLevel.Debug);
+        }
+
+        public void LogInfo(string message)
+        {
+            LogToModLog(message, LogLevel.Information);
+        }
+
+        public void LogError(string message, Exception ex = null)
+        {
+            LogToModLog(message, LogLevel.Error);
+        }
+
+        public void LogEvent(string message)
+        {
+            LogToGameLog(message);
+        }
+
+        public void LogWarn(string message)
+        {
+            LogToModLog(message, LogLevel.Warning);
         }
 
         /// <summary>
-        /// Clears the log buffer and writes any pending data to storage.
+        /// Logs a message to the game log.
         /// </summary>
+        /// <param name="message"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "The logger should not throw in order to avoid disrupting the game.")]
-        public void Flush()
+        private void LogToGameLog(string message)
         {
             try
             {
-                lock (LogFileManager.LogFileSyncRoot)
-                {
-                    LogFileManager.LogFileWriter?.Flush();
-                }
+                // Get the current time. It is used for the log entry timestamp and rollover detection.
+                var timestamp = DateTimeOffset.Now;
+
+                // TODO: Design and implement game message life cycle.
+                var messageText = message;
+
+                _gameLog.WriteLine(timestamp, messageText);
             }
             catch (Exception ex)
             {
@@ -49,42 +77,22 @@ namespace Insights.Logging
         }
 
         /// <summary>
-        /// Logs a message.
+        /// Logs a message to the mod log.
         /// </summary>
         /// <param name="message"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "The logger should not throw in order to avoid disrupting the game.")]
-        public void Log(string message)
+        private void LogToModLog(string message, LogLevel level)
         {
             try
             {
-                // Get the current time and create a new log file if the rollover interval is reached.
-                var timestamp = DateTime.UtcNow;
-                var timestampInterval = timestamp.Truncate(TimeSpan.TicksPerDay);
-
-                // Use double-checked locking pattern. The safety of this approach for all situations
-                // is debated, but it seems better than doing nothing. Open to improvement here.
-                if (timestampInterval != LogFileManager.LogFileTime)
-                {
-                    lock (LogFileManager.LogFileSyncRoot)
-                    {
-                        if (timestampInterval != LogFileManager.LogFileTime)
-                        {
-                            LogFileManager.LogFileTime = timestampInterval;
-
-                            LogFileManager.CreateLogFile(timestampInterval);
-                        }
-                    }
-                }
-
-                // TODO: Expand the message template to include module, method, context, and data.
+                // Get the current time. It is used for the log entry timestamp and rollover detection.
+                var timestamp = DateTimeOffset.Now;
+                var logLevelText = GetLogLevelText(level);
 
                 // Format and log the message.
-                var messageText = $"{timestamp:O} {_loggerTypeName} {message}";
+                var messageText = $"{timestamp:O} [{logLevelText}] {_loggerTypeName} {message}";
 
-                lock (LogFileManager.LogFileSyncRoot)
-                {
-                    LogFileManager.LogFileWriter.WriteLine(messageText);
-                }
+                _modLog.WriteLine(timestamp, messageText);
             }
             catch (Exception ex)
             {
@@ -101,11 +109,21 @@ namespace Insights.Logging
         /// See remarks on the LogFileManager.
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "The logger should not throw in order to avoid disrupting the game.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Instance member is more intuitive design. No performance concern.")]
         public void Reset()
         {
             try
             {
-                LogFileManager.Reset();
+                _gameLog.Reset();
+            }
+            catch (Exception ex)
+            {
+                InternalLogger.Log(LoggerErrorMessage, ex);
+            }
+
+            try
+            {
+                _modLog.Reset();
             }
             catch (Exception ex)
             {
@@ -113,15 +131,25 @@ namespace Insights.Logging
             }
         }
 
-        /// <summary>
-        /// Gets the name of the type used to create the generic logger instance.
-        /// </summary>
-        /// <returns></returns>
-        private string GetLoggerTypeName()
+        private static string GetLogLevelText(LogLevel level)
         {
-            return GetType()
-                .GetGenericArguments()[0]
-                .Name;
+            switch (level)
+            {
+                case LogLevel.Debug:
+                    return "DBG";
+
+                case LogLevel.Information:
+                    return "INF";
+
+                case LogLevel.Warning:
+                    return "WRN";
+
+                case LogLevel.Error:
+                    return "ERR";
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(level), $"The level {level} is not recognized.");
+            }
         }
     }
 }

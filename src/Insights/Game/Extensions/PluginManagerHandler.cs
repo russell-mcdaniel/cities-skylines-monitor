@@ -5,7 +5,7 @@ namespace Insights.Game.Extensions
 {
     public class PluginManagerHandler
     {
-        protected InsightsLogger<PluginManagerHandler> Logger { get; } = new InsightsLogger<PluginManagerHandler>();
+        protected InsightsLogger Logger { get; } = new InsightsLogger(typeof(PluginManagerHandler));
 
         public void Subscribe()
         {
@@ -29,19 +29,19 @@ namespace Insights.Game.Extensions
 
         private void EventLogMessage(PluginManager.MessageType type, string message)
         {
-            Logger.Log($"EventLogMessage > MessageType: {type} | Message: {message}");
+            Logger.LogDebug($"EventLogMessage > MessageType: {type} | Message: {message}");
         }
 
         private void PluginsChanged()
         {
-            Logger.Log("PluginsChanged");
+            Logger.LogDebug("PluginsChanged");
 
             ListPlugins("PluginsChanged");
         }
 
         private void PluginsStateChanged()
         {
-            Logger.Log("PluginsStateChanged");
+            Logger.LogDebug("PluginsStateChanged");
 
             ListPlugins("PluginsStateChanged");
         }
@@ -52,7 +52,7 @@ namespace Insights.Game.Extensions
 
             foreach (var info in manager.GetPluginsInfo())
             {
-                Logger.Log($"{eventName} ListPlugins > Name: {info.name} | IsBuiltIn: {info.isBuiltin} | IsEnabled: {info.isEnabled} | Assemblies ({info.assemblyCount}): {info.assembliesString}");
+                Logger.LogDebug($"{eventName} ListPlugins > Name: {info.name} | IsBuiltIn: {info.isBuiltin} | IsEnabled: {info.isEnabled} | Assemblies ({info.assemblyCount}): {info.assembliesString}");
             }
         }
     }
