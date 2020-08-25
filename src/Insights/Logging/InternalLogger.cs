@@ -8,7 +8,7 @@ namespace Insights.Logging
     {
         public static void Log(string message)
         {
-            var messageText = $"{DateTimeOffset.UtcNow:O} InsightsMod: {message}";
+            var messageText = $"{DateTimeOffset.Now:O} InsightsMod: {message}";
 
             DebugOutputPanel.AddMessage(PluginManager.MessageType.Message, messageText);
 
@@ -17,7 +17,7 @@ namespace Insights.Logging
 
         public static void Log(string message, Exception ex)
         {
-            var messageText = $"{DateTimeOffset.UtcNow:O} InsightsMod: {message}";
+            var messageText = $"{DateTimeOffset.Now:O} InsightsMod: {message}";
 
             DebugOutputPanel.AddMessage(PluginManager.MessageType.Error, messageText);
 
