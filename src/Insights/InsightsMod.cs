@@ -12,6 +12,7 @@ namespace Insights
 
         private LoadingManagerHandler _loadingManagerHandler;
         private LocaleManagerHandler _localeManagerHandler;
+        private PlatformServiceHandler _platformServiceHandler;
         private PluginManagerHandler _pluginManagerHandler;
         private SceneManagerHandler _sceneManagerHandler;
 
@@ -73,6 +74,9 @@ namespace Insights
             _localeManagerHandler = new LocaleManagerHandler();
             _localeManagerHandler.Subscribe();
 
+            _platformServiceHandler = new PlatformServiceHandler();
+            _platformServiceHandler.Subscribe();
+
             _pluginManagerHandler = new PluginManagerHandler();
             _pluginManagerHandler.Subscribe();
 
@@ -84,6 +88,7 @@ namespace Insights
         {
             _loadingManagerHandler.Unsubscribe();
             _localeManagerHandler.Subscribe();
+            _platformServiceHandler.Unsubscribe();
             _pluginManagerHandler.Unsubscribe();
             _sceneManagerHandler.Unsubscribe();
         }
