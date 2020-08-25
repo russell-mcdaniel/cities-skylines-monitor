@@ -57,6 +57,9 @@ namespace Insights.Game.Extensions
             Logger.LogDebug($"GameServerChangeRequested > Server: {server}");
         }
 
+        /// <remarks>
+        /// This can generate a large number of events when joining a group chat.
+        /// </remarks>
         private void PersonaStateChange(UserID id, PersonaChange flags)
         {
             Logger.LogDebug($"PersonaStateChange > UserId: {id.AsUInt64} | Change: {flags}");
