@@ -12,6 +12,7 @@ namespace Insights
 
         private LoadingManagerHandler _loadingManagerHandler;
         private PluginManagerHandler _pluginManagerHandler;
+        private SceneManagerHandler _sceneManagerHandler;
 
         #region IUserMod
 
@@ -70,12 +71,16 @@ namespace Insights
 
             _pluginManagerHandler = new PluginManagerHandler();
             _pluginManagerHandler.Subscribe();
+
+            _sceneManagerHandler = new SceneManagerHandler();
+            _sceneManagerHandler.Subscribe();
         }
 
         private void Unsubscribe()
         {
             _pluginManagerHandler.Unsubscribe();
             _loadingManagerHandler.Unsubscribe();
+            _sceneManagerHandler.Unsubscribe();
         }
     }
 }
