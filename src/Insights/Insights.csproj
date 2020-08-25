@@ -39,6 +39,7 @@
     <Compile Include="Game\Events\BeginSessionEvent.cs" />
     <Compile Include="Game\Events\CoreEvent.cs" />
     <Compile Include="Game\Events\EventType.cs" />
+    <Compile Include="Game\Extensions\AssetDataExtension.cs" />
     <Compile Include="Game\Extensions\LoadingManagerHandler.cs" />
     <Compile Include="Game\Extensions\LoadingExtension.cs" />
     <Compile Include="Game\Extensions\LocaleManagerHandler.cs" />
