@@ -1,4 +1,6 @@
-﻿using ICities;
+﻿using System;
+using System.Reflection;
+using ICities;
 using Insights.Game.Extensions;
 using Insights.Logging;
 
@@ -39,6 +41,22 @@ namespace Insights
         {
             Logger.LogDebug("OnEnabled");
 
+            // Log the Mono runtime version.
+            var monoRuntime = Type.GetType("Mono.Runtime");
+
+            if (monoRuntime != null)
+            {
+                var displayName = monoRuntime.GetMethod(
+                    "GetDisplayName",
+                    BindingFlags.NonPublic | BindingFlags.Static);
+
+                if (displayName != null)
+                {
+                    Logger.LogInfo($"OnEnabled > The Mono runtime version is {displayName.Invoke(null, null)}.");
+                }
+            }
+
+            // Subscribe to mod events.
             Subscribe();
         }
 
@@ -50,6 +68,7 @@ namespace Insights
         /// </remarks>
         public void OnDisabled()
         {
+            // Unsubscribe from mod events.
             Unsubscribe();
 
             Logger.LogDebug("OnDisabled");
