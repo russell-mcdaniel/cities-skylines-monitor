@@ -1,10 +1,13 @@
-﻿using Insights.Logging;
+﻿using System;
+using Insights.Logging;
 
 namespace Insights.Game.Extensions
 {
     public class LoadingManagerHandler
     {
         protected InsightsLogger Logger { get; } = new InsightsLogger(typeof(LoadingManagerHandler));
+
+        protected SessionContext Context { get; } = SessionContext.Instance;
 
         public void Subscribe()
         {
@@ -45,6 +48,9 @@ namespace Insights.Game.Extensions
         private void LevelPreLoaded()
         {
             Logger.LogDebug("LevelPreLoaded");
+
+            // Create a new game session.
+            Context.SessionId = Guid.NewGuid();
         }
 
         private void LevelPreUnloaded()

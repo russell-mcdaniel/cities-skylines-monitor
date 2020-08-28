@@ -1,4 +1,6 @@
 ﻿using System;
+using Insights.Game.Events;
+using Insights.Utilities;
 
 namespace Insights.Logging
 {
@@ -43,9 +45,9 @@ namespace Insights.Logging
             LogToModLog(message, LogLevel.Error);
         }
 
-        public void LogEvent(string message)
+        public void LogEvent(GameEvent @event)
         {
-            LogToGameLog(message);
+            LogToGameLog(@event);
         }
 
         public void LogWarn(string message)
@@ -58,17 +60,14 @@ namespace Insights.Logging
         /// </summary>
         /// <param name="message"></param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "The logger should not throw in order to avoid disrupting the game.")]
-        private void LogToGameLog(string message)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Instance member is more intuitive design. No performance concern.")]
+        private void LogToGameLog(GameEvent @event)
         {
             try
             {
-                // Get the current time. It is used for the log entry timestamp and rollover detection.
-                var timestamp = DateTimeOffset.Now;
+                var eventText = XmlHelper.ToXml(@event);
 
-                // TODO: Design and implement game message life cycle.
-                var messageText = message;
-
-                _gameLog.WriteLine(timestamp, messageText);
+                _gameLog.WriteLine(@event.Timestamp, eventText);
             }
             catch (Exception ex)
             {
@@ -85,7 +84,7 @@ namespace Insights.Logging
         {
             try
             {
-                // Get the current time. It is used for the log entry timestamp and rollover detection.
+                // The time is used for the log entry timestamp and for rollover detection.
                 var timestamp = DateTimeOffset.Now;
                 var logLevelText = GetLogLevelText(level);
 
