@@ -75,6 +75,11 @@ namespace Insights.Logging
             _timestampStep = DateTimeOffset.MinValue;
         }
 
+        /// <summary>
+        /// Writes a line to the log file.
+        /// </summary>
+        /// <param name="timestamp">The time of the log entry used for log file rollover detection.</param>
+        /// <param name="text"></param>
         public void WriteLine(DateTimeOffset timestamp, string text)
         {
             var timestampStep = timestamp.Truncate(_timestampResolution);
