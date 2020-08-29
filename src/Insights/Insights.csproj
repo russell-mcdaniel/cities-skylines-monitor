@@ -34,18 +34,31 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\LoadingManagerEvents.cs" />
-    <Compile Include="Game\LoadingExtension.cs" />
-    <Compile Include="Game\PluginManagerEvents.cs" />
-    <Compile Include="Game\SerializableDataExtension.cs" />
+    <Compile Include="Game\Events\SessionBeginEvent.cs" />
+    <Compile Include="Game\Events\GameEvent.cs" />
+    <Compile Include="Game\Events\EventType.cs" />
+    <Compile Include="Game\Extensions\AssetDataExtension.cs" />
+    <Compile Include="Game\Extensions\LoadingManagerHandler.cs" />
+    <Compile Include="Game\Extensions\LoadingExtension.cs" />
+    <Compile Include="Game\Extensions\LocaleManagerHandler.cs" />
+    <Compile Include="Game\Extensions\PlatformServiceHandler.cs" />
+    <Compile Include="Game\Extensions\PluginManagerHandler.cs" />
+    <Compile Include="Game\Extensions\SceneManagerHandler.cs" />
+    <Compile Include="Game\Extensions\SerializableDataExtension.cs" />
+    <Compile Include="Game\Extensions\ThreadingExtension.cs" />
+    <Compile Include="Game\SessionContext.cs" />
     <Compile Include="InsightsMod.cs" />
     <Compile Include="Logging\InsightsLogger.cs" />
-    <Compile Include="Logging\LogFileManager.cs" />
     <Compile Include="Logging\InternalLogger.cs" />
+    <Compile Include="Logging\LogFileManager.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
+    <Compile Include="Logging\RolloverInterval.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\DateTimeExtensions.cs" />
+    <Compile Include="Utilities\DateTimeOffsetExtensions.cs" />
+    <Compile Include="Utilities\XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CitiesSkylines.Assembly-CSharp">
@@ -69,6 +82,5 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,39 +1,36 @@
 ﻿using ICities;
 using Insights.Logging;
 
-namespace Insights.Game
+namespace Insights.Game.Extensions
 {
     public class SerializableDataExtension : SerializableDataExtensionBase
     {
-        protected InsightsLogger<SerializableDataExtension> InsightsLogger { get; } = new InsightsLogger<SerializableDataExtension>();
+        protected InsightsLogger Logger { get; } = new InsightsLogger(typeof(SerializableDataExtension));
 
         public override void OnCreated(ISerializableData serializableData)
         {
-            InsightsLogger.Log($"OnCreated");
+            Logger.LogDebug($"OnCreated");
 
             base.OnCreated(serializableData);
         }
 
         public override void OnLoadData()
         {
-            InsightsLogger.Log($"OnLoadData");
+            Logger.LogDebug($"OnLoadData");
 
             base.OnLoadData();
         }
 
         public override void OnReleased()
         {
-            InsightsLogger.Log($"OnReleased");
-
-            // Flush data at the end of a game session.
-            InsightsLogger.Flush();
+            Logger.LogDebug($"OnReleased");
 
             base.OnReleased();
         }
 
         public override void OnSaveData()
         {
-            InsightsLogger.Log($"OnSaveData");
+            Logger.LogDebug($"OnSaveData");
 
             base.OnSaveData();
         }

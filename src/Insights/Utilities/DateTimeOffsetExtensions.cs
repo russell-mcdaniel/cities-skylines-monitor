@@ -2,14 +2,14 @@
 
 namespace Insights.Utilities
 {
-    public static class DateTimeExtensions
+    public static class DateTimeOffsetExtensions
     {
         /// <summary>
-        /// Truncates a DateTime to the specified resolution.
+        /// Truncates a DateTimeOffset to the specified resolution.
         /// </summary>
-        /// <param name="date">Specifies the DateTime value to truncate.</param>
+        /// <param name="offset">Specifies the DateTimeOffset value to truncate.</param>
         /// <param name="resolution">Specifies the resolution for rounding like hour, minute, or ssecond. Use TimeSpan.TicksPer* values.</param>
-        /// <returns>Truncated DateTime</returns>
+        /// <returns>Truncated DateTimeOffset</returns>
         /// <remarks>
         /// Use TimeSpan.TicksPerXXXX to supply the resolution value.
         /// 
@@ -17,9 +17,9 @@ namespace Insights.Utilities
         /// 
         /// https://stackoverflow.com/questions/1004698/how-to-truncate-milliseconds-off-of-a-net-datetime
         /// </remarks>
-        public static DateTime Truncate(this DateTime date, long resolution)
+        public static DateTimeOffset Truncate(this DateTimeOffset offset, long resolution)
         {
-            return new DateTime(date.Ticks - (date.Ticks % resolution), date.Kind);
+            return new DateTimeOffset(offset.Ticks - (offset.Ticks % resolution), offset.Offset);
         }
     }
 }

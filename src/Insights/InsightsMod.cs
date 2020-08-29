@@ -1,19 +1,26 @@
-﻿using ICities;
-using Insights.Game;
+﻿using System;
+using System.Reflection;
+using ICities;
+using Insights.Game.Extensions;
 using Insights.Logging;
 
 namespace Insights
 {
     public class InsightsMod : IUserMod
     {
-        protected InsightsLogger<InsightsMod> InsightsLogger { get; } = new InsightsLogger<InsightsMod>();
+        protected InsightsLogger Logger { get; } = new InsightsLogger(typeof(InsightsMod));
 
-        private LoadingManagerEvents _loadingManagerEvents;
-        private PluginManagerEvents _pluginManagerEvents;
+        private readonly string _version = typeof(InsightsMod).Assembly.GetName().Version.ToString();
+
+        private LoadingManagerHandler _loadingManagerHandler;
+        private LocaleManagerHandler _localeManagerHandler;
+        private PlatformServiceHandler _platformServiceHandler;
+        private PluginManagerHandler _pluginManagerHandler;
+        private SceneManagerHandler _sceneManagerHandler;
 
         #region IUserMod
 
-        public string Name => "Insights";
+        public string Name => $"Insights {_version}";
 
         public string Description => "Gain insights from gameplay";
 
@@ -21,7 +28,7 @@ namespace Insights
 
         public InsightsMod()
         {
-            InsightsLogger.Log("Instantiated");
+            Logger.LogDebug("Instantiated");
         }
 
         /// <summary>
@@ -32,8 +39,24 @@ namespace Insights
         /// </remarks>
         public void OnEnabled()
         {
-            InsightsLogger.Log("OnEnabled");
+            Logger.LogDebug("OnEnabled");
 
+            // Log the Mono runtime version.
+            var monoRuntime = Type.GetType("Mono.Runtime");
+
+            if (monoRuntime != null)
+            {
+                var displayName = monoRuntime.GetMethod(
+                    "GetDisplayName",
+                    BindingFlags.NonPublic | BindingFlags.Static);
+
+                if (displayName != null)
+                {
+                    Logger.LogInfo($"OnEnabled > The Mono runtime version is {displayName.Invoke(null, null)}.");
+                }
+            }
+
+            // Subscribe to mod events.
             Subscribe();
         }
 
@@ -45,10 +68,11 @@ namespace Insights
         /// </remarks>
         public void OnDisabled()
         {
+            // Unsubscribe from mod events.
             Unsubscribe();
 
-            InsightsLogger.Log("OnDisabled");
-            InsightsLogger.Reset();
+            Logger.LogDebug("OnDisabled");
+            Logger.Reset();
         }
 
         /// <summary>
@@ -63,17 +87,29 @@ namespace Insights
 
         private void Subscribe()
         {
-            _loadingManagerEvents = new LoadingManagerEvents();
-            _loadingManagerEvents.Subscribe();
+            _loadingManagerHandler = new LoadingManagerHandler();
+            _loadingManagerHandler.Subscribe();
 
-            _pluginManagerEvents = new PluginManagerEvents();
-            _pluginManagerEvents.Subscribe();
+            _localeManagerHandler = new LocaleManagerHandler();
+            _localeManagerHandler.Subscribe();
+
+            _platformServiceHandler = new PlatformServiceHandler();
+            _platformServiceHandler.Subscribe();
+
+            _pluginManagerHandler = new PluginManagerHandler();
+            _pluginManagerHandler.Subscribe();
+
+            _sceneManagerHandler = new SceneManagerHandler();
+            _sceneManagerHandler.Subscribe();
         }
 
         private void Unsubscribe()
         {
-            _pluginManagerEvents.Unsubscribe();
-            _loadingManagerEvents.Unsubscribe();
+            _loadingManagerHandler.Unsubscribe();
+            _localeManagerHandler.Subscribe();
+            _platformServiceHandler.Unsubscribe();
+            _pluginManagerHandler.Unsubscribe();
+            _sceneManagerHandler.Unsubscribe();
         }
     }
 }
