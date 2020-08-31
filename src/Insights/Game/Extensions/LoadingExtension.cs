@@ -32,11 +32,13 @@ namespace Insights.Game.Extensions
         {
             Logger.LogDebug($"OnLevelLoaded > LoadMode: {mode}");
 
+            base.OnLevelLoaded(mode);
+
             // Create the Session Begin event.
-            var @event = new SessionBeginEvent
+            var @event = new SessionBeganEvent
             {
                 Timestamp = DateTimeOffset.Now,
-                EventType = EventType.SessionBegin,
+                EventType = EventType.SessionBegan,
                 SessionId = Context.SessionId,
                 Type = managers.loading.currentMode,
                 // Is this the same subtype provided by LoadingManager.LevelLoaded?
@@ -46,8 +48,6 @@ namespace Insights.Game.Extensions
             };
 
             Logger.LogEvent(@event);
-
-            base.OnLevelLoaded(mode);
         }
 
         public override void OnLevelUnloading()

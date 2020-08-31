@@ -4,7 +4,9 @@ using System.Xml.Serialization;
 
 namespace Insights.Game.Events
 {
-    [XmlInclude(typeof(SessionBeginEvent))]
+    [XmlInclude(typeof(BuildingCreatedEvent))]
+    [XmlInclude(typeof(BuildingReleasedEvent))]
+    [XmlInclude(typeof(SessionBeganEvent))]
     public abstract class GameEvent
     {
         /// <summary>
