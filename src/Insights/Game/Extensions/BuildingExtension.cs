@@ -16,7 +16,8 @@ namespace Insights.Game.Extensions
         {
             Logger.LogDebug($"OnBuildingCreated > ID: {id}");
 
-            var building = BuildingManager.instance.m_buildings.m_buffer[id];
+            var manager = BuildingManager.instance;
+            var building = manager.m_buildings.m_buffer[id];
 
             // Create the Building Create event.
             var @event = new BuildingCreatedEvent
@@ -25,7 +26,8 @@ namespace Insights.Game.Extensions
                 EventType = Events.EventType.BuildingCreated,
                 SessionId = Context.SessionId,
                 Id = id,
-                Name = building.Info.name,
+                Name = manager.GetBuildingName(id, InstanceID.Empty),
+                ObjectName = building.Info.name,
                 ClassName = building.Info.m_class.name
             };
 

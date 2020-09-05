@@ -11,6 +11,9 @@ namespace Insights.Game.Events
         public string Name { get; set; }
 
         [XmlAttribute]
+        public string ObjectName { get; set; }
+
+        [XmlAttribute]
         public string ClassName { get; set; }
     }
 }
