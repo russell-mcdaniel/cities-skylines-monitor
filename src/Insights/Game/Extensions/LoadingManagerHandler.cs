@@ -48,9 +48,6 @@ namespace Insights.Game.Extensions
         private void LevelPreLoaded()
         {
             Logger.LogDebug("LevelPreLoaded");
-
-            // Create a new game session.
-            Context.SessionId = Guid.NewGuid();
         }
 
         private void LevelPreUnloaded()

@@ -32,27 +32,45 @@ namespace Insights.Game.Extensions
         {
             Logger.LogDebug($"OnLevelLoaded > LoadMode: {mode}");
 
-            base.OnLevelLoaded(mode);
+            // Create and preserve ID for new session.
+            Context.SessionId = Guid.NewGuid();
+
+            var manager = SimulationManager.instance;
 
             // Create the Session Begin event.
-            var @event = new SessionBeganEvent
+            var @event = new SessionStartedEvent
             {
-                Timestamp = DateTimeOffset.Now,
-                EventType = EventType.SessionBegan,
+                SessionTime = DateTimeOffset.Now,
                 SessionId = Context.SessionId,
+                GameTime = manager.m_currentGameTime,
+                EventType = EventType.SessionStarted,
                 Type = managers.loading.currentMode,
                 // Is this the same subtype provided by LoadingManager.LevelLoaded?
-                Subtype = SimulationManager.instance.m_metaData.m_updateMode,
-                InstanceId = new Guid(SimulationManager.instance.m_metaData.m_gameInstanceIdentifier),
-                CityName = SimulationManager.instance.m_metaData.m_CityName
+                Subtype = manager.m_metaData.m_updateMode,
+                InstanceId = new Guid(manager.m_metaData.m_gameInstanceIdentifier),
+                CityName = manager.m_metaData.m_CityName
             };
 
             Logger.LogEvent(@event);
+
+            base.OnLevelLoaded(mode);
         }
 
         public override void OnLevelUnloading()
         {
             Logger.LogDebug("OnLevelUnloading");
+
+            var manager = SimulationManager.instance;
+
+            var @event = new SessionEndedEvent
+            {
+                SessionTime = DateTimeOffset.Now,
+                SessionId = Context.SessionId,
+                GameTime = manager.m_currentGameTime,
+                EventType = EventType.SessionEnded
+            };
+
+            Logger.LogEvent(@event);
 
             base.OnLevelUnloading();
         }

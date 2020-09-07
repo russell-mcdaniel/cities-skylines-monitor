@@ -39,9 +39,10 @@
   <ItemGroup>
     <Compile Include="Game\Events\BuildingCreatedEvent.cs" />
     <Compile Include="Game\Events\BuildingReleasedEvent.cs" />
-    <Compile Include="Game\Events\SessionBeganEvent.cs" />
+    <Compile Include="Game\Events\SessionStartedEvent.cs" />
     <Compile Include="Game\Events\GameEvent.cs" />
     <Compile Include="Game\Events\EventType.cs" />
+    <Compile Include="Game\Events\SessionEndedEvent.cs" />
     <Compile Include="Game\Extensions\AssetDataExtension.cs" />
     <Compile Include="Game\Extensions\BuildingExtension.cs" />
     <Compile Include="Game\Extensions\BuildingManagerHandler.cs" />

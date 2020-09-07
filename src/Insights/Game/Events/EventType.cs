@@ -4,6 +4,7 @@
     {
         BuildingCreated,
         BuildingReleased,
-        SessionBegan
+        SessionStarted,
+        SessionEnded
     }
 }

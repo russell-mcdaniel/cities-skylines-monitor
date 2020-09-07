@@ -39,7 +39,7 @@ namespace Insights.Cli
             // Result: The derived class case is selected.
             switch (gex)
             {
-                case SessionBeganEvent sbe:
+                case SessionStartedEvent sbe:
                     Console.WriteLine($"SessionBeginEvent > Session ID: {sbe.SessionId} | Event Type: {sbe.EventType} | Instance ID: {sbe.InstanceId}");
                     break;
 
@@ -67,7 +67,7 @@ namespace Insights.Cli
             Console.WriteLine("GameEvent");
         }
 
-        static void DeserializeXmlForEvent(SessionBeganEvent sbe)
+        static void DeserializeXmlForEvent(SessionStartedEvent sbe)
         {
             Console.WriteLine("SessionBeginEvent");
         }

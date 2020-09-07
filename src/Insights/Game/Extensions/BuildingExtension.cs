@@ -22,9 +22,10 @@ namespace Insights.Game.Extensions
             // Create the Building Create event.
             var @event = new BuildingCreatedEvent
             {
-                Timestamp = DateTimeOffset.Now,
-                EventType = Events.EventType.BuildingCreated,
+                SessionTime = DateTimeOffset.Now,
                 SessionId = Context.SessionId,
+                GameTime = SimulationManager.instance.m_currentGameTime,
+                EventType = Events.EventType.BuildingCreated,
                 Id = id,
                 Name = manager.GetBuildingName(id, InstanceID.Empty),
                 ObjectName = building.Info.name,
@@ -42,9 +43,10 @@ namespace Insights.Game.Extensions
 
             var @event = new BuildingReleasedEvent
             {
-                Timestamp = DateTimeOffset.Now,
-                EventType = Events.EventType.BuildingReleased,
+                SessionTime = DateTimeOffset.Now,
                 SessionId = Context.SessionId,
+                GameTime = SimulationManager.instance.m_currentGameTime,
+                EventType = Events.EventType.BuildingReleased,
                 Id = id
             };
 
