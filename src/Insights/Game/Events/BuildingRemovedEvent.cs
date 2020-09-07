@@ -2,7 +2,7 @@
 
 namespace Insights.Game.Events
 {
-    public class BuildingReleasedEvent : GameEvent
+    public class BuildingRemovedEvent : GameEvent
     {
         [XmlAttribute]
         public ushort Id { get; set; }

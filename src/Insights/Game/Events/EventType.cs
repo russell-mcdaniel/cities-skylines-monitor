@@ -2,9 +2,9 @@
 {
     public enum EventType
     {
-        BuildingCreated,
-        BuildingReleased,
         SessionStarted,
-        SessionEnded
+        SessionEnded,
+        BuildingCreated,
+        BuildingRemoved
     }
 }

@@ -38,7 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Events\BuildingCreatedEvent.cs" />
-    <Compile Include="Game\Events\BuildingReleasedEvent.cs" />
+    <Compile Include="Game\Events\BuildingRemovedEvent.cs" />
     <Compile Include="Game\Events\SessionStartedEvent.cs" />
     <Compile Include="Game\Events\GameEvent.cs" />
     <Compile Include="Game\Events\EventType.cs" />

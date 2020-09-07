@@ -41,12 +41,12 @@ namespace Insights.Game.Extensions
         {
             Logger.LogDebug($"OnBuildingReleased > ID: {id}");
 
-            var @event = new BuildingReleasedEvent
+            var @event = new BuildingRemovedEvent
             {
                 SessionTime = DateTimeOffset.Now,
                 SessionId = Context.SessionId,
                 GameTime = SimulationManager.instance.m_currentGameTime,
-                EventType = Events.EventType.BuildingReleased,
+                EventType = Events.EventType.BuildingRemoved,
                 Id = id
             };
 
