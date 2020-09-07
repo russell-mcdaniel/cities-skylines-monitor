@@ -42,7 +42,7 @@ namespace Insights.Game.Extensions
             {
                 SessionTime = DateTimeOffset.Now,
                 SessionId = Context.SessionId,
-                GameTime = manager.m_currentGameTime,
+                GameTime = CalculateGameTime(manager),
                 EventType = EventType.SessionStarted,
                 Type = managers.loading.currentMode,
                 // Is this the same subtype provided by LoadingManager.LevelLoaded?
@@ -80,6 +80,20 @@ namespace Insights.Game.Extensions
             Logger.LogDebug("OnReleased");
 
             base.OnReleased();
+        }
+
+        /// <summary>
+        /// Calculate the game time based on its constituent components from the simulation.
+        /// </summary>
+        /// <remarks>
+        /// This is only necessary when a game is first loaded because the game time member on the
+        /// simulation manager is not calculated until the simulation has started.
+        /// 
+        /// See SimulationManager.Update() for the original source of the calculation.
+        /// </remarks>
+        private static DateTime CalculateGameTime(SimulationManager manager)
+        {
+            return new DateTime((long)manager.m_referenceFrameIndex * manager.m_timePerFrame.Ticks + (long)((double)manager.m_referenceTimer * (double)manager.m_timePerFrame.Ticks) + manager.m_timeOffsetTicks);
         }
     }
 }
