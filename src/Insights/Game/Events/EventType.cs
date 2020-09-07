@@ -1,9 +1,10 @@
-﻿using System;
-
-namespace Insights.Game.Events
+﻿namespace Insights.Game.Events
 {
     public enum EventType
     {
-        SessionBegin
+        SessionStarted,
+        SessionEnded,
+        BuildingCreated,
+        BuildingRemoved
     }
 }

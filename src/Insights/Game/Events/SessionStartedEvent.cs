@@ -4,7 +4,7 @@ using ICities;
 
 namespace Insights.Game.Events
 {
-    public class SessionBeginEvent : GameEvent
+    public class SessionStartedEvent : GameEvent
     {
         [XmlAttribute]
         public AppMode Type { get; set; }

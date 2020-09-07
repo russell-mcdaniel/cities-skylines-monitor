@@ -32,17 +32,23 @@ namespace Insights.Game.Extensions
         {
             Logger.LogDebug($"OnLevelLoaded > LoadMode: {mode}");
 
+            // Create and preserve ID for new session.
+            Context.SessionId = Guid.NewGuid();
+
+            var manager = SimulationManager.instance;
+
             // Create the Session Begin event.
-            var @event = new SessionBeginEvent
+            var @event = new SessionStartedEvent
             {
-                Timestamp = DateTimeOffset.Now,
-                EventType = EventType.SessionBegin,
+                SessionTime = DateTimeOffset.Now,
                 SessionId = Context.SessionId,
+                GameTime = CalculateGameTime(manager),
+                EventType = EventType.SessionStarted,
                 Type = managers.loading.currentMode,
                 // Is this the same subtype provided by LoadingManager.LevelLoaded?
-                Subtype = SimulationManager.instance.m_metaData.m_updateMode,
-                InstanceId = new Guid(SimulationManager.instance.m_metaData.m_gameInstanceIdentifier),
-                CityName = SimulationManager.instance.m_metaData.m_CityName
+                Subtype = manager.m_metaData.m_updateMode,
+                InstanceId = new Guid(manager.m_metaData.m_gameInstanceIdentifier),
+                CityName = manager.m_metaData.m_CityName
             };
 
             Logger.LogEvent(@event);
@@ -54,6 +60,18 @@ namespace Insights.Game.Extensions
         {
             Logger.LogDebug("OnLevelUnloading");
 
+            var manager = SimulationManager.instance;
+
+            var @event = new SessionEndedEvent
+            {
+                SessionTime = DateTimeOffset.Now,
+                SessionId = Context.SessionId,
+                GameTime = manager.m_currentGameTime,
+                EventType = EventType.SessionEnded
+            };
+
+            Logger.LogEvent(@event);
+
             base.OnLevelUnloading();
         }
 
@@ -62,6 +80,20 @@ namespace Insights.Game.Extensions
             Logger.LogDebug("OnReleased");
 
             base.OnReleased();
+        }
+
+        /// <summary>
+        /// Calculate the game time based on its constituent components from the simulation.
+        /// </summary>
+        /// <remarks>
+        /// This is only necessary when a game is first loaded because the game time member on the
+        /// simulation manager is not calculated until the simulation has started.
+        /// 
+        /// See SimulationManager.Update() for the original source of the calculation.
+        /// </remarks>
+        private static DateTime CalculateGameTime(SimulationManager manager)
+        {
+            return new DateTime((long)manager.m_referenceFrameIndex * manager.m_timePerFrame.Ticks + (long)((double)manager.m_referenceTimer * (double)manager.m_timePerFrame.Ticks) + manager.m_timeOffsetTicks);
         }
     }
 }

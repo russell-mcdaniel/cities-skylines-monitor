@@ -26,9 +26,5 @@ namespace Insights.Game
         public static SessionContext Instance { get; } = new SessionContext();
 
         public Guid SessionId { get; set; }
-
-        public AppMode SessionType { get; set; }
-
-        public SimulationManager.UpdateMode SessionSubtype { get; set; }
     }
 }

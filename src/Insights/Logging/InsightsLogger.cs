@@ -67,7 +67,7 @@ namespace Insights.Logging
             {
                 var eventText = XmlHelper.ToXml(@event);
 
-                _gameLog.WriteLine(@event.Timestamp, eventText);
+                _gameLog.WriteLine(@event.SessionTime, eventText);
             }
             catch (Exception ex)
             {
