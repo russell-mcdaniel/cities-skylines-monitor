@@ -11,7 +11,7 @@ namespace Insights.Game.Events
     public abstract class GameEvent
     {
         /// <summary>
-        /// Gets or sets the timestamp for the event.
+        /// Gets or sets the session time for the event (the real-world time).
         /// </summary>
         [XmlIgnore]
         public DateTimeOffset SessionTime { get; set; }
@@ -34,6 +34,9 @@ namespace Insights.Game.Events
         [XmlAttribute]
         public Guid SessionId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the game time for the event (the in-game simulated time).
+        /// </summary>
         [XmlIgnore]
         public DateTime GameTime { get; set; }
 
