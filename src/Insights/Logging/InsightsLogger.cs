@@ -12,12 +12,12 @@ namespace Insights.Logging
         private const string LoggerErrorMessage = "The logger encountered an error.";
 
 #if DEBUG
-        private static LogFileManager _gameLog = new LogFileManager("Game", RolloverInterval.Day);
+        private static LogFileManager _gameLog = new LogFileManager(LogFileType.Game, RolloverInterval.Hour);
 #else
-        private static LogFileManager _gameLog = new LogFileManager("InsightsGame", RolloverInterval.Minute);
+        private static LogFileManager _gameLog = new LogFileManager(LogFileType.Game, RolloverInterval.Minute);
 #endif
 
-        private static LogFileManager _modLog = new LogFileManager("Mod", RolloverInterval.Day);
+        private static LogFileManager _modLog = new LogFileManager(LogFileType.Mod, RolloverInterval.Day);
 
         private readonly string _loggerTypeName;
 

@@ -29,7 +29,14 @@ namespace Insights.Logging
         private const bool LogFileAutoFlush = false;
 #endif
 
-        private string _fileName;
+        /// <summary>
+        /// The base location of the log files as a relative directory.
+        /// </summary>
+        private const string LogFileDirectoryBase = "Mods/Insights/Logs";
+
+        private string _logFileDirectory;
+
+        private LogFileType _logFileType;
 
         private object _syncRoot { get; } = new object();
 
@@ -45,13 +52,42 @@ namespace Insights.Logging
         /// </summary>
         private StreamWriter _writer;
 
-        public LogFileManager(string fileName, RolloverInterval interval)
+        public LogFileManager(LogFileType type, RolloverInterval interval)
         {
-            if (string.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException(nameof(fileName));
+            // Set the log file type, directory, and rollover configuration.
+            _logFileType = type;
+            _logFileDirectory = GetLogFileDirectory(type);
 
-            _fileName = fileName;
+            Directory.CreateDirectory(_logFileDirectory);
+
             _timestampResolution = GetTimestampInterval(interval);
+        }
+
+        /// <summary>
+        /// Returns the log file directory for the specified log file type.
+        /// </summary>
+        public static string GetLogFileDirectory(LogFileType type)
+        {
+            return Path.Combine(
+                Application.dataPath,
+                Path.Combine(
+                    LogFileDirectoryBase,
+                    type.ToString()));
+        }
+
+        private static string GetLogFileName(LogFileType type, DateTimeOffset timestamp)
+        {
+            switch (type)
+            {
+                case LogFileType.Game:
+                    return $"{timestamp:yyyyMMdd-HHmmss}.log";
+
+                case LogFileType.Mod:
+                    return $"{timestamp:yyyyMMdd}.log";
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), $"Unknown LogFileType: {type}");
+            }
         }
 
         /// <summary>
@@ -113,17 +149,12 @@ namespace Insights.Logging
         private void CreateLogFile(DateTimeOffset timestamp)
         {
             // Set the log file name.
-            var logFileName = $"{_fileName}-{timestamp:yyyyMMdd}-{timestamp:HHmmss}.log";
+            var logFileName = GetLogFileName(_logFileType, timestamp);
 
             // Set the log file path.
             var logFilePath = Path.Combine(
-                Application.dataPath,
-                Path.Combine(
-                    "Mods/Insights",
-                    logFileName));
-
-            // Create directory. No action if the directory already exists.
-            Directory.CreateDirectory(Path.GetDirectoryName(logFilePath));
+                _logFileDirectory,
+                logFileName);
 
             // Dispose the existing writer. This forces a flush.
             _writer?.Dispose();
