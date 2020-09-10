@@ -12,6 +12,8 @@ namespace Insights
 
         private readonly string _version = typeof(InsightsMod).Assembly.GetName().Version.ToString();
 
+        private InsightsUploader _uploader;
+
         private BuildingManagerHandler _buildingManagerHandler;
         private LoadingManagerHandler _loadingManagerHandler;
         private LocaleManagerHandler _localeManagerHandler;
@@ -29,7 +31,12 @@ namespace Insights
 
         public InsightsMod()
         {
-            Logger.LogDebug("Instantiated");
+            Logger.LogDebug($"{nameof(InsightsMod)} > Instantiating...");
+
+            // Create uploader.
+            _uploader = new InsightsUploader();
+
+            Logger.LogDebug($"{nameof(InsightsMod)} > Instantiated.");
         }
 
         /// <summary>
@@ -40,7 +47,7 @@ namespace Insights
         /// </remarks>
         public void OnEnabled()
         {
-            Logger.LogDebug("OnEnabled");
+            Logger.LogDebug($"{nameof(OnEnabled)} > Enabling...");
 
             // Log the Mono runtime version.
             var monoRuntime = Type.GetType("Mono.Runtime");
@@ -59,6 +66,11 @@ namespace Insights
 
             // Subscribe to mod events.
             Subscribe();
+
+            // Start uploader.
+            _uploader.Start();
+
+            Logger.LogDebug($"{nameof(OnEnabled)} > Enabled.");
         }
 
         /// <summary>
@@ -69,15 +81,20 @@ namespace Insights
         /// </remarks>
         public void OnDisabled()
         {
+            Logger.LogDebug($"{nameof(OnDisabled)} > Disabling...");
+
             // Unsubscribe from mod events.
             Unsubscribe();
 
-            Logger.LogDebug("OnDisabled");
+            // Stop uploader.
+            _uploader.Stop();
+
+            Logger.LogDebug($"{nameof(OnDisabled)} > Disabled.");
             Logger.Reset();
         }
 
         /// <summary>
-        /// Called when 
+        /// Called when the mod configuration user interface is invoked.
         /// </summary>
         /// <param name="helper"></param>
         //public void OnSettingsUI(UIHelperBase helper)
