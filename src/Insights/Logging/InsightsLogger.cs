@@ -12,7 +12,7 @@ namespace Insights.Logging
         private const string LoggerErrorMessage = "The logger encountered an error.";
 
 #if DEBUG
-        private static LogFileManager _gameLog = new LogFileManager(LogFileType.Game, RolloverInterval.Hour);
+        private static LogFileManager _gameLog = new LogFileManager(LogFileType.Game, RolloverInterval.Day);
 #else
         private static LogFileManager _gameLog = new LogFileManager(LogFileType.Game, RolloverInterval.Minute);
 #endif
