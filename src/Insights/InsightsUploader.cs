@@ -16,11 +16,20 @@ namespace Insights
 
         protected InsightsLogger Logger { get; } = new InsightsLogger(typeof(InsightsUploader));
 
-        private ManualResetEvent _cancellationEvent;
+        private readonly string _archiveDirectory = $"{LogFileManager.GetLogFileDirectory(LogFileType.Game)}Archive";
         private Regex _fileNameExpression = new Regex(FileNamePattern);
+
+        private ManualResetEvent _cancellationEvent;
+
         private Thread _processor;
         private readonly TimeSpan _processorSleepTimeout = TimeSpan.FromSeconds(15);
         private readonly TimeSpan _processorStopTimeout = TimeSpan.FromSeconds(3);
+
+        public InsightsUploader()
+        {
+            // Create the archive directory.
+            Directory.CreateDirectory(_archiveDirectory);
+        }
 
         public void Start()
         {
@@ -58,35 +67,6 @@ namespace Insights
             Logger.LogDebug($"{nameof(Stop)} > Stopped.");
         }
 
-        private void ProcessLogFile(string filePath)
-        {
-            Logger.LogDebug($"{nameof(ProcessLogFile)} > FilePath: {filePath}");
-
-            var fileName = Path.GetFileName(filePath);
-
-            // Check the file name.
-            if (!_fileNameExpression.IsMatch(fileName))
-            {
-                Logger.LogWarn($"{nameof(ProcessLogFile)} > Skipping log file with invalid name.");
-
-                // TODO: Quarantine.
-                return;
-            }
-
-            // Check the file size.
-            if (new FileInfo(filePath).Length > FileSizeMaximum)
-            {
-                Logger.LogWarn($"{nameof(ProcessLogFile)} > Skipping log file exceeding maximum size.");
-
-                // TODO: Quarantine.
-                return;
-            }
-
-            // TODO: Upload the file.
-
-            // TODO: Delete the file (if uploaded).
-        }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "The uploader should not throw in order to avoid disrupting the game.")]
         private void ProcessLogFiles()
         {
@@ -102,7 +82,8 @@ namespace Insights
 
                     Array.Sort(filePaths);
 
-                    // TODO: Upload the last file on shutdown (edge case)?
+                    // TODO: [Edge Case] Upload the last file on shutdown.
+                    // TODO: [Edge Case] Invalid file name sorts after last valid file causing attempt to upload active file.
 
                     // Process each file. Skip the most recent file because it may be open.
                     for (int i = 0; i < filePaths.Length - 1; i++)
@@ -123,6 +104,66 @@ namespace Insights
                     _cancellationEvent.WaitOne(_processorSleepTimeout);
                 }
             }
+        }
+
+        private void ProcessLogFile(string filePath)
+        {
+            Logger.LogDebug($"{nameof(ProcessLogFile)} > Processing log file \"{Path.GetFileName(filePath)}\".");
+
+            if (!ProcessLogFileValidate(filePath))
+            {
+                ProcessLogFileArchive(filePath);
+
+                return;
+            }
+
+            if (ProcessLogFileUpload(filePath))
+            {
+                ProcessLogFileArchive(filePath);
+            }
+        }
+
+        private void ProcessLogFileArchive(string filePath)
+        {
+            Logger.LogDebug($"{nameof(ProcessLogFileArchive)} > Archiving log file.");
+
+            var archiveFilePath = Path.Combine(
+                _archiveDirectory,
+                Path.GetFileName(filePath));
+
+            File.Move(filePath, archiveFilePath);
+        }
+
+        private bool ProcessLogFileUpload(string filePath)
+        {
+            Logger.LogDebug($"{nameof(ProcessLogFileUpload)} > Uploading log file.");
+
+            Thread.Sleep(250);
+
+            return true;
+        }
+
+        private bool ProcessLogFileValidate(string filePath)
+        {
+            Logger.LogDebug($"{nameof(ProcessLogFileValidate)} > Validating log file.");
+
+            // Check the file name.
+            if (!_fileNameExpression.IsMatch(Path.GetFileName(filePath)))
+            {
+                Logger.LogWarn($"{nameof(ProcessLogFileValidate)} > Skipping log file with invalid name.");
+
+                return false;
+            }
+
+            // Check the file size.
+            if (new FileInfo(filePath).Length > FileSizeMaximum)
+            {
+                Logger.LogWarn($"{nameof(ProcessLogFileValidate)} > Skipping log file exceeding maximum size.");
+
+                return false;
+            }
+
+            return true;
         }
 
         #region IDisposable
