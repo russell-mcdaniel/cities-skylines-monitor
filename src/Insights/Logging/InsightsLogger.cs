@@ -11,7 +11,7 @@ namespace Insights.Logging
     {
         private const string LoggerErrorMessage = "The logger encountered an error.";
 
-#if DEBUG
+#if DEBUGX
         private static LogFileManager _gameLog = new LogFileManager(LogFileType.Game, RolloverInterval.Day);
 #else
         private static LogFileManager _gameLog = new LogFileManager(LogFileType.Game, RolloverInterval.Minute);
@@ -43,6 +43,11 @@ namespace Insights.Logging
         public void LogError(string message, Exception ex = null)
         {
             LogToModLog(message, LogLevel.Error);
+
+            if (ex != null)
+            {
+                LogToModLog(ex.ToString(), LogLevel.Error);
+            }
         }
 
         public void LogEvent(GameEvent @event)
