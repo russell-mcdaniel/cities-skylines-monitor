@@ -4,6 +4,7 @@ ECHO.
 ECHO Creating the mod path...
 
 SET MODPATH=%LOCALAPPDATA%\Colossal Order\Cities_Skylines\Addons\Mods\Insights
+SET SRCPATH=..\src\Insights\bin\Debug
 
 IF NOT EXIST "%MODPATH%" (
     MKDIR "%MODPATH%"
@@ -20,7 +21,7 @@ DEL /F /S /Q "%MODPATH%\*.*"
 ECHO.
 ECHO Copying files...
 
-XCOPY /E "bin\Debug\Insights.*" "%MODPATH%"
+XCOPY /E "%SRCPATH%\Insights.*" "%MODPATH%"
 
 ECHO.
 ECHO Deployment complete.

@@ -56,13 +56,16 @@
     <Compile Include="Game\Extensions\ThreadingExtension.cs" />
     <Compile Include="Game\SessionContext.cs" />
     <Compile Include="InsightsMod.cs" />
+    <Compile Include="InsightsUploader.cs" />
     <Compile Include="Logging\InsightsLogger.cs" />
     <Compile Include="Logging\InternalLogger.cs" />
     <Compile Include="Logging\LogFileManager.cs" />
+    <Compile Include="Logging\LogFileType.cs" />
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Logging\RolloverInterval.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\DateTimeOffsetExtensions.cs" />
+    <Compile Include="Utilities\JsonHelper.cs" />
     <Compile Include="Utilities\XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -87,5 +90,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
