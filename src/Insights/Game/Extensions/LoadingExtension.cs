@@ -37,7 +37,6 @@ namespace Insights.Game.Extensions
 
             var manager = SimulationManager.instance;
 
-            // Create the Session Begin event.
             var @event = new SessionStartedEvent
             {
                 SessionTime = DateTimeOffset.Now,

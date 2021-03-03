@@ -19,7 +19,6 @@ namespace Insights.Game.Extensions
             var manager = BuildingManager.instance;
             var building = manager.m_buildings.m_buffer[id];
 
-            // Create the Building Create event.
             var @event = new BuildingCreatedEvent
             {
                 SessionTime = DateTimeOffset.Now,
