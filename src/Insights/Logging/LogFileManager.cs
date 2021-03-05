@@ -145,7 +145,7 @@ namespace Insights.Logging
         /// Creates a log file based on the specified timestamp. If the log file already exists, it will be opened.
         /// </summary>
         /// <param name="timestamp">The timestamp truncated to the target log file interval.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The log writer lifecycle is managed at the class scope.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "The log writer life cycle is managed at the class scope.")]
         private void CreateLogFile(DateTimeOffset timestamp)
         {
             // Set the log file name.
