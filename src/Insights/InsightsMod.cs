@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Reflection;
+using ColossalFramework.UI;
 using ICities;
 using Insights.Game.Extensions;
 using Insights.Logging;
+using Insights.Utilities;
 
 namespace Insights
 {
@@ -64,6 +66,10 @@ namespace Insights
                 }
             }
 
+            // Load configuration.
+
+            // Check player key.
+
             // Subscribe to mod events.
             Subscribe();
 
@@ -97,11 +103,37 @@ namespace Insights
         /// Called when the mod configuration user interface is invoked.
         /// </summary>
         /// <param name="helper"></param>
-        //public void OnSettingsUI(UIHelperBase helper)
-        //{
-        //    // TODO: Implement settings for user key and secret.
-        //    // https://skylines.paradoxwikis.com/Mod_Options_Panel
-        //}
+        public void OnSettingsUI(UIHelperBase helper)
+        {
+            if (helper == null)
+                throw new ArgumentNullException(nameof(helper));
+
+            // TODO: Create settings UI class.
+            // TODO: Create settings state class.
+            // TODO: Create settings persistence class.
+            var group = helper.AddGroup(Name);
+
+            var playerKeyField = (UITextField)group.AddTextfield("Player Key (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)", string.Empty, PlayerKeyTextField_OnTextChanged, PlayerKeyTextField_OnTextSubmitted);
+            playerKeyField.maxLength = 36;
+            playerKeyField.width = 400;
+        }
+
+        private void PlayerKeyTextField_OnTextChanged(string text)
+        {
+        }
+
+        private void PlayerKeyTextField_OnTextSubmitted(string text)
+        {
+            Logger.LogDebug($"{nameof(PlayerKeyTextField_OnTextSubmitted)} > Validating player key...");
+
+            // TODO: Convert this to an extension method 
+            if (GuidHelper.TryParse(text, out Guid? playerKey))
+                Logger.LogDebug($"{nameof(PlayerKeyTextField_OnTextSubmitted)} > The player key is a valid GUID.");
+            else
+                Logger.LogError($"{nameof(PlayerKeyTextField_OnTextSubmitted)} > The player key is not a valid GUID.");
+
+            Logger.LogDebug($"{nameof(PlayerKeyTextField_OnTextSubmitted)} > Validated player key.");
+        }
 
         private void Subscribe()
         {
